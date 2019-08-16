@@ -1,3 +1,5 @@
+"use strict";
+
 var pokemart = {
     "Pokeball": 10,
     "Great Ball": 20,
@@ -13,7 +15,6 @@ var pokemart = {
 
 var cart = {}
 var money = 1000; 
-
 
 function addToCart(item, amount) {
     if(pokemart[item] === undefined)
@@ -35,11 +36,11 @@ function removeFromCart(item, amount) {
         console.log(`You did not make the amount of ${item}s to be removed a positive integer, so they could not be removed from your cart.`);
     else if ((cart[item] - amount) < 0) {
         cart[item] = 0;
-        console.log(`You tried to remove more ${item}s than you have in your cart, so all of them were removed.`)
+        console.log(`You tried to remove more ${item}s than you have in your cart, so all of them were removed.`);
     }
     else {
         cart[item] -= amount;
-        console.log(`You removed ${amount} ${item}s from your cart.`)
+        console.log(`You removed ${amount} ${item}s from your cart.`);
     }
 }
 
@@ -53,14 +54,15 @@ function checkout() {
         if(cart[x] != 0) {
             cost += cart[x] * pokemart[x];
             if(cart[x] != 1)
-                console.log(`${cart[x]} ${x}s for ${pokemart[x]} PokeDollars each.`)
+                console.log(`${cart[x]} ${x}s for ${pokemart[x]} PokeDollars each.`);
             else
-                console.log(`A ${x} for ${pokemart[x]} PokeDollars.`)
+                console.log(`A ${x} for ${pokemart[x]} PokeDollars.`);
         }
     }
 
+    //states the results of the checkout
     console.log();
-    console.log(`This purchase costs ${cost} PokeDollars.`)
+    console.log(`This purchase costs ${cost} PokeDollars.`);
     if(cost > money)
         console.log("You do not have enough money for this purchase. Please remove some items.");
     else {
@@ -68,13 +70,13 @@ function checkout() {
         console.log(`You now have ${money - cost} PokeDollars remaining.`);
         money -= cost;
         if(cart["Pokeball"] >= 10)
-            console.log("Wait! For buying so many PokeBalls, we will also give you this Premier Ball for free!")
+            console.log("Wait! For buying so many PokeBalls, we will also give you this Premier Ball for free!");
         cart = {};
         console.log();
     }
 }
 
-console.log(`You have ${money} PokeDollars.`)
+console.log(`You have ${money} PokeDollars.`);
 console.log();
 addToCart("Pokeball", 10);
 addToCart("Great Ball", "tree");
