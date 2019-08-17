@@ -28,7 +28,7 @@ function addToCart(item, amount) {
         if(amount === 1)
             console.log(`You added 1 ${item} to your cart.`);
         else
-            console.log(`You added ${amount} ${items} to your cart.`)
+            console.log(`You added ${amount} ${items} to your cart.`);
     }
 }
 
