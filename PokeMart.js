@@ -13,7 +13,7 @@ var pokemart = {
     "Hyper Potion": 30
 }
 
-var cart = {}
+var cart = {};
 var money = 1000; 
 
 function addToCart(item, amount) {
@@ -25,7 +25,10 @@ function addToCart(item, amount) {
         if(cart[item] === undefined)
             cart[item] = 0;
         cart[item] += amount;
-        console.log(`You added ${amount} ${item}s to your cart.`)
+        if(amount === 1)
+            console.log(`You added 1 ${item} to your cart.`);
+        else
+            console.log(`You added ${amount} ${items} to your cart.`)
     }
 }
 
@@ -40,7 +43,10 @@ function removeFromCart(item, amount) {
     }
     else {
         cart[item] -= amount;
-        console.log(`You removed ${amount} ${item}s from your cart.`);
+        if(amount === 1)
+            console.log(`You removed 1 ${item} from your cart.`);
+        else
+            console.log(`You removed ${amount} ${items} from your cart.`);
     }
 }
 
@@ -53,10 +59,10 @@ function checkout() {
     for(x in cart) {
         if(cart[x] != 0) {
             cost += cart[x] * pokemart[x];
-            if(cart[x] != 1)
-                console.log(`${cart[x]} ${x}s for ${pokemart[x]} PokeDollars each.`);
-            else
+            if(cart[x] === 1)
                 console.log(`A ${x} for ${pokemart[x]} PokeDollars.`);
+            else
+                console.log(`${cart[x]} ${x}s for ${pokemart[x]} PokeDollars each.`);
         }
     }
 
