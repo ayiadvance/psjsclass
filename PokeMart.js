@@ -10,7 +10,37 @@ var pokemart = {
     "Quick Ball": 20,
     "Potion": 15,
     "Super Potion": 25,
-    "Hyper Potion": 30
+    "Hyper Potion": 30,
+
+    checkout() {
+        let cost = 0;
+        console.log();
+        console.log(`You want to buy:`);
+    
+        //cycles through each item in the cart
+        for(let x in cart) {
+            if(cart[x] != 0) {
+                cost += cart[x] * this[x];
+                console.log(`${cart[x]} ${x}${cart[x] === 1 ? "" : "s"} for ${this[x]} PokeDollars${cart[x] === 1 ? "" : " each"}.`);
+            }
+        }
+    
+        //states the results of the checkout
+        console.log();
+        console.log(`This purchase costs ${cost} PokeDollars.`);
+        if(cost > money)
+            console.log("You do not have enough money for this purchase. Please remove some items.");
+        else {
+            console.log("You have successfully bought what was in your cart.");
+            console.log(`You now have ${money - cost} PokeDollars remaining.`);
+            money -= cost;
+            if(cart["Pokeball"] >= 10)
+                console.log(`Wait! For buying so many PokeBalls, we will also give you ${Math.floor(cart["Pokeball"]/10)} Premier Ball${cart["Pokeball"] >= 20 ? "s" : ""} for free!`);
+            cart = {};
+            console.log();
+        }
+    }
+    
 }
 
 var cart = {};
@@ -43,35 +73,6 @@ function removeFromCart(item, amount) {
     }
 }
 
-function checkout() {
-    let cost = 0;
-    console.log();
-    console.log(`You want to buy:`);
-
-    //cycles through each item in the cart
-    for(let x in cart) {
-        if(cart[x] != 0) {
-            cost += cart[x] * pokemart[x];
-            console.log(`${cart[x]} ${x}${cart[x] === 1 ? "" : "s"} for ${pokemart[x]} PokeDollars${cart[x] === 1 ? "" : " each"}.`);
-        }
-    }
-
-    //states the results of the checkout
-    console.log();
-    console.log(`This purchase costs ${cost} PokeDollars.`);
-    if(cost > money)
-        console.log("You do not have enough money for this purchase. Please remove some items.");
-    else {
-        console.log("You have successfully bought what was in your cart.");
-        console.log(`You now have ${money - cost} PokeDollars remaining.`);
-        money -= cost;
-        if(cart["Pokeball"] >= 10)
-            console.log(`Wait! For buying so many PokeBalls, we will also give you ${Math.floor(cart["Pokeball"]/10)} Premier Ball${cart["Pokeball"] >= 20 ? "s" : ""} for free!`);
-        cart = {};
-        console.log();
-    }
-}
-
 console.log(`You have ${money} PokeDollars.`);
 console.log();
 addToCart("Pokeball", 30);
@@ -79,8 +80,8 @@ addToCart("Great Ball", "tree");
 addToCart("Love Ball", 10);
 addToCart("Hyper Potion", 5);
 addToCart("Quick Ball", 5);
-checkout();
+pokemart.checkout();
 
 addToCart("Hyper Ball", 3);
 removeFromCart("Hyper Ball", 2);
-checkout();
+pokemart.checkout();
