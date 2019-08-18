@@ -14,39 +14,32 @@ var pokemart = {
 }
 
 var cart = {};
-var money = 1000; 
+var money = 1000;
 
 function addToCart(item, amount) {
-    if(pokemart[item] === undefined)
+    if(!pokemart[item])
         console.log(`You tried to add ${item}s to your cart, but ${item}s are not sold at this PokeMart.`);
     else if (!Number.isInteger(amount) || amount <= 0)
         console.log(`You did not make the amount of ${item}s to be added a positive integer, so it could not be added to your cart.`);
     else {
-        if(cart[item] === undefined)
+        if(!cart[item])
             cart[item] = 0;
         cart[item] += amount;
-        if(amount === 1)
-            console.log(`You added 1 ${item} to your cart.`);
-        else
-            console.log(`You added ${amount} ${items} to your cart.`);
+        console.log(`You removed ${amount} ${item}${amount === 1 ? "" : "s"} from your cart.`);
     }
 }
 
 function removeFromCart(item, amount) {
-    if(cart[item] === undefined)
+    if(!cart[item])
         console.log(`You tried to remove ${item}s from your cart, but there are no ${item}s in your cart.`);
     else if (!Number.isInteger(amount) || amount <= 0)
         console.log(`You did not make the amount of ${item}s to be removed a positive integer, so they could not be removed from your cart.`);
     else if ((cart[item] - amount) < 0) {
         cart[item] = 0;
         console.log(`You tried to remove more ${item}s than you have in your cart, so all of them were removed.`);
-    }
-    else {
+    } else {
         cart[item] -= amount;
-        if(amount === 1)
-            console.log(`You removed 1 ${item} from your cart.`);
-        else
-            console.log(`You removed ${amount} ${items} from your cart.`);
+        console.log(`You removed ${amount} ${item}${amount === 1 ? "" : "s"} from your cart.`);
     }
 }
 
@@ -56,13 +49,10 @@ function checkout() {
     console.log(`You want to buy:`);
 
     //cycles through each item in the cart
-    for(x in cart) {
+    for(let x in cart) {
         if(cart[x] != 0) {
             cost += cart[x] * pokemart[x];
-            if(cart[x] === 1)
-                console.log(`A ${x} for ${pokemart[x]} PokeDollars.`);
-            else
-                console.log(`${cart[x]} ${x}s for ${pokemart[x]} PokeDollars each.`);
+            console.log(`${cart[x]} ${x}${cart[x] === 1 ? "" : "s"} for ${pokemart[x]} PokeDollars${cart[x] === 1 ? "" : " each"}.`);
         }
     }
 
@@ -76,7 +66,7 @@ function checkout() {
         console.log(`You now have ${money - cost} PokeDollars remaining.`);
         money -= cost;
         if(cart["Pokeball"] >= 10)
-            console.log("Wait! For buying so many PokeBalls, we will also give you this Premier Ball for free!");
+            console.log(`Wait! For buying so many PokeBalls, we will also give you ${Math.floor(cart["Pokeball"]/10)} Premier Ball${cart["Pokeball"] >= 20 ? "s" : ""} for free!`);
         cart = {};
         console.log();
     }
@@ -84,7 +74,7 @@ function checkout() {
 
 console.log(`You have ${money} PokeDollars.`);
 console.log();
-addToCart("Pokeball", 10);
+addToCart("Pokeball", 30);
 addToCart("Great Ball", "tree");
 addToCart("Love Ball", 10);
 addToCart("Hyper Potion", 5);
